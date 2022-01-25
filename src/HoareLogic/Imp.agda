@@ -1,4 +1,4 @@
-module Imp where
+module HoareLogic.Imp where
 
 open import Agda.Builtin.FromNat
 open import Data.String using (String)
@@ -9,7 +9,7 @@ import Data.Nat.Literals as NatLiterals
 open import Data.Unit using (⊤)
 open import Data.Product using (_×_)
 open import Function.Equivalence using (_⇔_)
-open import Map
+open import HoareLogic.Map
 open import Relation.Binary.PropositionalEquality using (_≡_; refl; trans; sym)
 open import Reflection as Rfl using (TC; Term; _>>=_)
 

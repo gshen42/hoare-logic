@@ -22,31 +22,22 @@ infix  73 _:=_ if_then_else_end while_then_end
 infixr 72 _;_
 infix  71 _↦_ _=[_]=>_
 
-data Type : Set where
-  `ℕ    : Type
-  `Bool : Type
-
-⟦_⟧ : Type → Set
-⟦ `ℕ    ⟧ = ℕ
-⟦ `Bool ⟧ = Bool
-
--- We could have written `Expr : Set → Set`, the problem is that the unification doesn't work very well with `Set`.
-data Expr : Type → Set where
-  num   : ℕ → Expr `ℕ
-  var   : String → Expr `ℕ
-  _+_   : Expr `ℕ → Expr `ℕ → Expr `ℕ
-  _-_   : Expr `ℕ → Expr `ℕ → Expr `ℕ
-  _*_   : Expr `ℕ → Expr `ℕ → Expr `ℕ
-  true  : Expr `Bool
-  false : Expr `Bool
-  _==_  : Expr `ℕ → Expr `ℕ → Expr `Bool
-  _<=_  : Expr `ℕ → Expr `ℕ → Expr `Bool
-  !_    : Expr `Bool → Expr `Bool
-  _&&_  : Expr `Bool → Expr `Bool → Expr `Bool
+data Expr : Set → Set where
+  num   : ℕ → Expr ℕ
+  var   : String → Expr ℕ
+  _+_   : Expr ℕ → Expr ℕ → Expr ℕ
+  _-_   : Expr ℕ → Expr ℕ → Expr ℕ
+  _*_   : Expr ℕ → Expr ℕ → Expr ℕ
+  true  : Expr Bool
+  false : Expr Bool
+  _==_  : Expr ℕ → Expr ℕ → Expr Bool
+  _<=_  : Expr ℕ → Expr ℕ → Expr Bool
+  !_    : Expr Bool → Expr Bool
+  _&&_  : Expr Bool → Expr Bool → Expr Bool
 
 instance
   -- so we can write natural number literal `n` for `(num n)`
-  _ : Number (Expr `ℕ)
+  _ : Number (Expr ℕ)
   _ = record
     { Constraint = λ _ → ⊤
     ; fromNat    = λ n → num n
@@ -73,7 +64,7 @@ macro
 
 State = Map ℕ
 
-eval : ∀ {A} → State → Expr A → ⟦ A ⟧
+eval : ∀ {A} → State → Expr A → A
 eval s (num n)    = n
 eval s (var x)    = s x
 eval s (e₁ + e₂)  = (eval s e₁) ℕ.+ (eval s e₂)
@@ -103,10 +94,10 @@ _ = refl
 
 data Com : Set where
   skip : Com
-  _:=_ : String → Expr `ℕ → Com
+  _:=_ : String → Expr ℕ → Com
   _;_  : Com → Com → Com -- this is the greek question mark not semicolon
-  if_then_else_end : Expr `Bool → Com → Com → Com
-  while_then_end   : Expr `Bool → Com → Com
+  if_then_else_end : Expr Bool → Com → Com → Com
+  while_then_end   : Expr Bool → Com → Com
 
 -- compute the factorial of the number stored in X
 factorial : Com

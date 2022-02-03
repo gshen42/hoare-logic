@@ -4,11 +4,11 @@ open import Data.Bool using (Bool; true; false)
 open import Data.String using (String; _≟_)
 open import Relation.Nullary using (yes; no)
 
-Map : Set → Set
-Map A = String → A
-
 infix  71 ·↦_
 infixr 70 _↦_,_
+
+Map : Set → Set
+Map A = String → A
 
 ·↦_ : ∀ {A} → A → Map A
 ·↦_ v _ = v

@@ -1,4 +1,4 @@
-module HoareLogic.Map where
+module HoareLogic.Maps where
 
 open import Data.Bool using (Bool; true; false)
 open import Data.String using (String; _≟_)

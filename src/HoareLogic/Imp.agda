@@ -9,7 +9,7 @@ import Data.Nat.Literals as NatLiterals
 open import Data.Unit using (⊤)
 open import Data.Product using (_×_)
 open import Function.Equivalence using (_⇔_)
-open import HoareLogic.Map
+open import HoareLogic.Maps
 open import Relation.Binary.PropositionalEquality using (_≡_; refl; trans; sym)
 open import Reflection as Rfl using (TC; Term; _>>=_)
 
